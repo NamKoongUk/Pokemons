@@ -39,7 +39,7 @@ public class PokemonDao implements Serializable{
       pList.add(new Pokemon("±úºñµå¸±Á¶",22,0,0,0, 0, new Item(), false,0, 0, 0, 0,new ArrayList<Skill>()));
       pList.add(new Pokemon("ÇÇÄ«Ãò",23,0,0,0, 0, new Item(), false,0, 0, 0, 0,new ArrayList<Skill>()));*/
       
-      
+	   outputPokemon();
       
    }
    

@@ -19,7 +19,6 @@ public class ItemDao {
    private List<Item> iList = new ArrayList<Item>();
    
    public ItemDao() {
-	   outputItem();
       /*iList.add(new Ball("마스터 볼", 0, 50, 0, 0, 70, 0));
       iList.add(new Ball("슈퍼 볼", 1, 30, 0, 0, 50, 1));
       iList.add(new Ball("몬스터 볼", 2, 10, 0, 0, 20, 2));
@@ -29,6 +28,7 @@ public class ItemDao {
       iList.add(new Stone("화염의 돌", 6, 200, 2, 0));
       iList.add(new Stone("바다의 돌", 7, 200, 2, 0));
       iList.add(new Stone("나무의 돌", 8, 200, 2, 0));*/
+	   outputItem();
    }
    
    public void inputItem() {

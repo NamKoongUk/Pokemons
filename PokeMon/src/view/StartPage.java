@@ -5,12 +5,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import controller.UserManager;
 import model.dao.UserDao;
-import model.vo.Pokemon;
 import model.vo.User;
 
 public class StartPage extends JPanel{

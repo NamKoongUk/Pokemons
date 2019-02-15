@@ -12,10 +12,11 @@ public class User implements java.io.Serializable{
    private ArrayList<Pokemon> up_list;
    private ArrayList<Item> ui_list;
    private ArrayList<Pokemon> tp_list;
+   private ArrayList<Pokemon> ep_list;
  
    public User() {}
    
-   public User(String uName, Date uDate, int uGold, ArrayList<Pokemon> up_list, ArrayList<Item> ui_list, ArrayList<Pokemon> tp_list) {
+   public User(String uName, Date uDate, int uGold, ArrayList<Pokemon> up_list, ArrayList<Item> ui_list, ArrayList<Pokemon> tp_list, ArrayList<Pokemon> ep_list) {
 	super();
 	this.uName = uName;
 	this.uDate = uDate;
@@ -23,6 +24,15 @@ public class User implements java.io.Serializable{
 	this.up_list = up_list;
 	this.ui_list = ui_list;
 	this.tp_list = tp_list;
+	this.ep_list = ep_list;
+}
+
+public ArrayList<Pokemon> getEp_list() {
+	return ep_list;
+}
+
+public void setEp_list(ArrayList<Pokemon> ep_list) {
+	this.ep_list = ep_list;
 }
 
 public void setUp_list(ArrayList<Pokemon> up_list) {
