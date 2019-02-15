@@ -35,29 +35,37 @@ public class BattleManager {
    //현재 포켓몬 보여주는 부분
    public void showP(PInfoPage pip, User user) {
 
+	   /*
 	   user.getUp_list().add(new Pokemon());
 	   user.getUp_list().add(new Pokemon());
-	   user.getUp_list().add(new Pokemon());
-	   user.getUp_list().add(new Pokemon()); 
+	   user.getUp_list().add(new Pokemon());*/ 
       this.pip = pip;
       
-      
+      user.getUp_list().set(0, new Pokemon());
 
       JTextArea[] jta = new JTextArea[4];
       JLabel[] jl = new JLabel[4];
+      
 
-      for(int i=0; i<user.getUp_list().size(); i++) {
-         
-    	  if(user.getUp_list().get(i) ==null) {
-    		  
-    	  }else {
-    		  
+      for(int i=0; i<4; i++) {
+    	  
+    	  if(user.getUp_list().get(i) == null) {
     		  jl[i] = new JLabel();
+        	  jta[i] = new JTextArea();
+    		  jta[i].setText("\t포켓몬 이름 : "+ " " + "\n"
+   	               +"\t레    벨 : " + " " + "\n"
+   	               +"\t등    급 : " + " " + "\n"
+   	               +"\t스 피 드 : " + " " + "\n"
+   	               +"\t체    력  : " +" " + "\n");
+   	         jta[i].setEditable(false);
+    		  jl[i].setIcon(new ImageIcon("images/userMenuImages/pInfo4.png"));
+    	  }else {
+    		  jl[i] = new JLabel();
+        	  jta[i] = new JTextArea();
     	         num = user.getUp_list().get(i).getpNo();
     	         jl[i].setIcon(new ImageIcon("images/userMenuImages/pBook/"+num+".png"));
 
 
-    	         jta[i] = new JTextArea();
     	         jta[i].setText("\t포켓몬 이름 : "+ user.getUp_list().get(i).getpName() + "\n"
     	               +"\t레    벨 : " + user.getUp_list().get(i).getpLevel() + "\n"
     	               +"\t등    급 : " + user.getUp_list().get(i).getGrade() + "\n"
