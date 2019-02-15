@@ -89,6 +89,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 	private int num = 99;
 	private boolean onOff;
 	private int centernum;
+	
 
 
 
@@ -97,7 +98,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 	int escCtn=0;//SM_추가
 
 	public Map(MainFrame mf, User user) {
-
+		this.user = user;
 		System.out.println("맵 클래스 실행...");
 
 		this.mf = mf;
