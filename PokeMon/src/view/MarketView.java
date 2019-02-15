@@ -44,12 +44,14 @@ public class MarketView extends JPanel {
    private Image backButtonImage = new ImageIcon("images/back.png").getImage();
    private JButton backButton = new JButton(new ImageIcon(backButtonImage));
    
-   private MCManager mc = new MCManager();
+   private MCManager mc;
    
  //--------------------------수정
    private ItemDao id = new ItemDao();
    private User user;
+   
    public MarketView(MainFrame mf, JPanel oldPage, User user) {
+	  mc = new MCManager(user);
 	  this.user = user;
       this.mf=mf;
       this.marketView=this;
@@ -58,8 +60,6 @@ public class MarketView extends JPanel {
       this.setBounds(0, 0, 1024, 768);
       
       listPanel =new JPanel();
-      
-      //ArrayList<Board> list = bd.readBoardList();
       
       List<Item> itemList = id.getIList();
       
@@ -74,11 +74,6 @@ public class MarketView extends JPanel {
          
       }
       
-      /*JLabel[] iImageList = new JLabel[id.readItemList().size()];
-      for(int i=0 ; i<iImageList.length ; i++) {
-         iImageList[i] = new JLabel(new ImageIcon(id.getItemList().get(i).getiImg()));
-       }*/
-      
       JList itemPrice = new JList(iPriceList);
       itemPrice.setFont(new Font(getName(),Font.BOLD,17));
       itemPrice.setBounds(400, 100, 80, 250);
@@ -89,14 +84,6 @@ public class MarketView extends JPanel {
       itemName.setFont(new Font(getName(),Font.BOLD,17));
       itemName.setBounds(500, 100, 300, 250);
       itemName.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-      
-      /*JList itemImg = new JList();
-      for(int i = 0; i < itemList.length; i++) {
-         itemImg.add(iImageList[i]);
-      }
-      itemImg.setBounds(0, 100, 300, 250);
-      itemImg.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-      itemImg.setVisible(true);*/
       
       
       JLabel presentGold = new JLabel("현재 소지 금액 : ");
@@ -162,38 +149,16 @@ public class MarketView extends JPanel {
             //MCManager에서 비교
             iAmount = Integer.parseInt(selectedAmount.getText());
             
-            mc.useMarket(iName, iAmount,user);
+           
+            mc.useMarket(iName, iAmount);
             
-            mc.useMarket(selectedItem.getText(), iAmount,user);
+            mc.useMarket(selectedItem.getText(), iAmount);
             userGold.setText(user.getuGold()+"G");
             
             if(mc.getResultNo()!=null) {
                 resultAmount.setText(mc.getResultNo());
                 userGold.setText(user.getuGold()+"G");
             }
-                
-            /*if(value>100) {
-               System.out.println("즐");
-               resultAmount.setText("최대 구매 가능 수량은 100 입니다.");
-            }else if(value<=0) {
-               
-               resultAmount.setText("최소 구매 수량은 1개 입니다.");
-               
-            }else {
-               
-               if(mc.getResultNo()!=null) {
-                  resultAmount.setText(ud.getUList().get(0).getuGold() + "G");
-               }else {
-                  resultItem.setText(selectedItem.getText()+"");
-                  resultAmount.setText(value+"");
-                  
-                  mc.useMarket(selectedItem.getText(),itemAmount);
-                  
-               }
-               
-            }*/
-            
-            
          }
       });
       
@@ -215,7 +180,6 @@ public class MarketView extends JPanel {
             
             m.setVisible(true);
             mf.requestFocus();
-            //((Map)m).start();
             m.setEscCtn(0);
             
          }
