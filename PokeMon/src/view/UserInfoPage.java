@@ -23,32 +23,32 @@ public class UserInfoPage extends JPanel implements KeyListener{
 	private UserMenuPage ump;
 	
 	private JLabel charactorLabel = new JLabel(new ImageIcon("images/userMenuImages/userImage.PNG"));
-	private JLabel badgeLable = new JLabel(new ImageIcon("images/userMenuImages/badge.PNG"));
 	private JLabel playTimeLabel;
 	private JLabel createTime;
-	private JLabel goldLabel = new JLabel(new ImageIcon("images/userMenuImages/gold.PNG"));
-	private JLabel getPokeLabel = new JLabel(new ImageIcon("images/userMenuImages/getPoke.PNG"));
+	private JLabel goldLabel;
+	private JLabel getPokeLabel;
 	private JLabel userNameLabel;
 	private JButton backButton = new JButton(new ImageIcon("images/userMenuImages/backButtonBasic.PNG"));
+	private User user;
 	
-	public UserInfoPage(MainFrame mf,UserMenuPage ump) {
-		UserManager um = new UserManager();
+	public UserInfoPage(MainFrame mf,UserMenuPage ump,User user) {
+		UserManager um = new UserManager(user);
+		System.out.println("유저 정보 페이지");
+		System.out.println(user);
 		this.mf = mf;
 		this.uip = this;
 		this.ump = ump;
 		uip.setOpaque(false);
 		uip.setBounds(0, 0, 1024, 768);
 		
-		/*User user = new User("이름",new Date(),100000);
-		UserDao ud = new UserDao(user);
-		UserManager um = new UserManager(user,ud);*/
+
 		
-		userNameLabel = new JLabel();
+		userNameLabel = um.viewUserName();
 		playTimeLabel = new JLabel();
-		//userNameLabel.setText(um.viewUserName());
-		//playTimeLabel.setText(um.viewUserTime());
-		createTime = new JLabel();
-		//createTime.setText("캐릭터 생성날짜 : " + User.getuDate());
+		playTimeLabel.setText(um.viewUserTime());
+		createTime = um.viewCreateTime();
+		goldLabel = um.getUserGold();
+		getPokeLabel = um.viewUserGetPoke();
 		
 		mf.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
@@ -91,19 +91,17 @@ public class UserInfoPage extends JPanel implements KeyListener{
 		label.setBounds(450, 20, 200, 40);
 		
 		charactorLabel.setBounds(180, 70, 250, 400);
-		userNameLabel.setBounds(340, 480, 300, 90);
-		badgeLable.setBounds(520, 70, 300, 300);
-		createTime.setBounds(180, 390, 300, 300);
-		playTimeLabel.setBounds(180,430,300,300);
-		goldLabel.setBounds(520, 390, 300, 140);
-		getPokeLabel.setBounds(520, 550, 300, 140);
+		userNameLabel.setBounds(620, 100, 200, 120);
+		createTime.setBounds(620, 240, 300, 120);
+		playTimeLabel.setBounds(620,360,300,100);
+		goldLabel.setBounds(620, 460, 300, 100);
+		getPokeLabel.setBounds(620, 550, 300, 100);
 		
 		
 		this.add(label);
 		this.add(backButton);
 		this.add(charactorLabel);
 		this.add(userNameLabel);
-		this.add(badgeLable);
 		this.add(playTimeLabel);
 		this.add(createTime);
 		this.add(goldLabel);

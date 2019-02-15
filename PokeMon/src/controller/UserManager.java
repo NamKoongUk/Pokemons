@@ -1,17 +1,25 @@
 package controller;
 
+import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.JLabel;
 
 import model.vo.User;
 
 public class UserManager {
-	/*
-	public UserManager() {
-		
+	User user = new User();
+	Font font = new Font("", Font.BOLD, 30);
+	
+	public UserManager(User user) {
+		this.user = user;
 	}
 	
 	public void userItemSet() {
+		
+	}
+	public void saveUser() {
 		
 	}
 	
@@ -19,34 +27,44 @@ public class UserManager {
 		//첫 포켓몬 선택하는 메소드
 	}
 	
-	public int getUserGold() {
-		//userDao가 가지고잇는 User객체값의 gold를 리턴받음
-		
-		return User.getuGold();
-	}
-	public void setUser(User user) {
-
+	public JLabel getUserGold() {
+		JLabel goldLabel = new JLabel();
+		goldLabel.setFont(font);
+		goldLabel.setText(user.getuGold()+"");
+		return goldLabel;
 	}
 
 	public void setUserGold(int gold) {
-		User.setuGold(gold);
+		user.setuGold(gold);
 	}
-	public String viewUserName() {
-		return User.getuName();
+	//유저 닉네임 라벨로 만들어 리턴
+	public JLabel viewUserName() {
+		JLabel userNameLabel = new JLabel();
+		userNameLabel.setText(user.getuName());
+		userNameLabel.setFont(font);
+		return userNameLabel;
 	}
 	public String viewUserTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("hh시 mm분");
-		
-		long diff = User.getuDate().getTime() - new Date().getTime();
-		
-		
+		long diff = user.getuDate().getTime() - new Date().getTime();
 		String time = sdf.format(diff);
 		return time;
 		
 	}
-	public String viewCreateTime() {
+	//유저 생성시간 라벨로 만들어 리턴
+	public JLabel viewCreateTime() {
+		JLabel createTimeLabel = new JLabel();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd E요일 hh시 mm분");
-		String time = sdf.format(User.getuDate());
-		return time;
-	}*/
+		String time = sdf.format(user.getuDate());
+		createTimeLabel.setText("캐릭터 생성시간 : " + time);
+		createTimeLabel.setFont(new Font("",Font.CENTER_BASELINE,10));
+		return createTimeLabel;
+	}
+	//잡은 포켓몬 수 라벨로 만들어 리턴
+	public JLabel viewUserGetPoke() {
+		JLabel getPokeLabel = new JLabel();
+		getPokeLabel.setFont(font);
+		getPokeLabel.setText("획득한 포켓몬 : " + user.getTp_list().size());
+		return getPokeLabel;
+	}
 }
