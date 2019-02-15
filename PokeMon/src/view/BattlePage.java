@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controller.BattleManager;
 import model.vo.User;
 
 
@@ -22,6 +23,7 @@ public class BattlePage extends JPanel {
    private PInfoPage pip;
    private JPanel uivp;
    private User user;
+   private BattleManager bm = new BattleManager();
 
    //버튼 이미지 올리기
    private Image fightButtonImage = new ImageIcon("images/싸운다버튼.png").getImage();
@@ -53,13 +55,14 @@ public class BattlePage extends JPanel {
 
 
    public BattlePage(MainFrame mf, JPanel panel, User user) {
-      this.bp = this;
+     
+	   this.bp = this;
       this.mf = mf;
       this.m = (Map)panel;
       this.pip = new PInfoPage(mf,this,user);
       this.bsp = new BattleSkillPage(mf, this);
       this.user = user;
-
+      
       //버튼을 맘대로 배치하기 위해
       bp.setLayout(null);
       //this.pip = new PInfoPage(mf, this);
@@ -150,6 +153,7 @@ public class BattlePage extends JPanel {
                mf.remove(bp);
                m.setVisible(true);
                mf.requestFocus();
+               m.setCantMove(false);
                //((Map) m).start();
             }
          });
@@ -173,6 +177,7 @@ public class BattlePage extends JPanel {
             mf.remove(bp);
             m.setVisible(true);
             mf.requestFocus();
+            m.setCantMove(false);
             //((Map) m).start();
          }
       });

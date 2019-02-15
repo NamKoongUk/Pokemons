@@ -17,12 +17,15 @@ public class UserDao{
    
    
    public UserDao() {
-      User user = new User("str",new Date(),500,new ArrayList(9),new ArrayList(4),new ArrayList(4));
+      User user = new User("str",new Date(),500,new ArrayList(9),new ArrayList(4),new ArrayList(4), new ArrayList(4));
       for(int i=0; i<9; i++) {
     	  user.getUi_list().add(null);
       }
       for(int i=0; i<4; i++) {
     	  user.getUp_list().add(null);
+      }
+      for(int i=0; i<4; i++) {
+    	  user.getEp_list().add(null);
       }
       userList.add(user);
       

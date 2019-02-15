@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import controller.BattleManager;
 import model.vo.User;
 
 
@@ -39,7 +40,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 	private MarketView marketView;//SM_추가
 	private CenterView centerView;
 	private int movementSP = 3;
-
+	private BattleManager bm = new BattleManager();
 	private StartPage stp;
 
 	private BattlePage bp;
@@ -696,6 +697,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 			if(rect.intersects(h_wrange)){
 				int hrand = new Random().nextInt(100);
 				if(hrand == 30) {
+					bm.randomP(user);
 					cantmove = true;
 					System.out.println("배틀페이지");
 					m.setVisible(false);
@@ -727,6 +729,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 			if(rect.intersects(h_wrange1)){
 				int hrand = new Random().nextInt(100);
 				if(hrand == 30) {
+					
 					cantmove = true;
 					System.out.println("배틀페이지");
 					m.setVisible(false);
@@ -755,7 +758,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 			//x = 50;
 			//y = 245;
 			ctn += 1 ;
-
+			
 			System.out.println("Npc배틀페이지");
 			m.setVisible(false);
 			mf.add(bp);

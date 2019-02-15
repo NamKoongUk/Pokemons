@@ -17,7 +17,15 @@ public class SkillDao implements Serializable{
 
 
 
-   public SkillDao() {
+   public List<Skill> getsList() {
+	return sList;
+}
+
+public void setsList(List<Skill> sList) {
+	this.sList = sList;
+}
+
+public SkillDao() {
       //처음 데이터 입력용
       
       /*sList.add(new Skill("모야모야",100,0,0));
@@ -38,7 +46,7 @@ public class SkillDao implements Serializable{
       sList.add(new Skill("덩쿨채찍",15,3,14));
       sList.add(new Skill("잎날가르기",16,3,16));
       sList.add(new Skill("솔라빔",17,3,18));*/
-      
+	outputSkill();
    }
    
    public void inputSkill() {

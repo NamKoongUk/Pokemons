@@ -190,7 +190,7 @@ public class BattleSkillPage extends JPanel implements KeyListener {
 	
 	
 	//NpcBattlePage 받는 생성자
-	public BattleSkillPage(MainFrame mf, NpcBattlePage nbp) {
+	/*public BattleSkillPage(MainFrame mf, NpcBattlePage nbp) {
 		this.mf = mf;
 		this.bsp = this;
 		this.nbp = nbp;
@@ -310,5 +310,5 @@ public class BattleSkillPage extends JPanel implements KeyListener {
 		this.add(backButton);
 		
 	}
-	
+	*/
 }

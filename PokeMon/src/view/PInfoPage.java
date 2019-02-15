@@ -17,43 +17,45 @@ import controller.BattleManager;
 import model.vo.User;
 
 public class PInfoPage extends JPanel{
-   private MainFrame mf;
-   private Map m;
-   private JPanel pip;
-   private UserMenuPage ump;
-   private BattlePage bp;
-   private User user;
-   //private NpcBattlePage nbp;
+	private MainFrame mf;
+	private Map m;
+	private JPanel pip;
+	private UserMenuPage ump;
+	private BattlePage bp;
+	private User user;
+	private BattleManager bm = new BattleManager();
+	private Thread th;
+	//private NpcBattlePage nbp;
 
-   private JLabel[] pInfo = new JLabel[4];
-   private JTextArea[] pInfoText = new JTextArea[4];
-   private JButton backButton = new JButton(new ImageIcon("images/userMenuImages/backButtonBasic.png"));
+	private JLabel[] pInfo = new JLabel[4];
+	private JTextArea[] pInfoText = new JTextArea[4];
+	private JButton backButton = new JButton(new ImageIcon("images/userMenuImages/backButtonBasic.png"));
 
-   public PInfoPage(MainFrame mf, UserMenuPage ump, User user) {
-      
-      this.mf = mf;
-      this.pip = this;
-      this.ump = ump;
-      this.user = user;
-      pip.setOpaque(false);
-      pip.setBounds(0, 0, 1024, 768);
-/*      pm.setPokemon(new Pokemon(1,"이상해씨",50,3));
+	public PInfoPage(MainFrame mf, UserMenuPage ump, User user) {
+
+		this.mf = mf;
+		this.pip = this;
+		this.ump = ump;
+		this.user = user;
+		pip.setOpaque(false);
+		pip.setBounds(0, 0, 1024, 768);
+		/*      pm.setPokemon(new Pokemon(1,"이상해씨",50,3));
       pm.setPokemon(new Pokemon(4,"파이리",50,3));
       pm.setPokemon(new Pokemon(6,"리자몽",50,1));
       pm.setPokemon(new Pokemon(5,"리자드",50,2));*/
-      for(int i=0; i < pInfo.length; i++) {
-         pInfo[i] = new JLabel();
-         pInfo[i] = new JLabel(new ImageIcon("images/userMenuImages/pInfo4.png"));
-      }
-      for(int i=0; i < pInfo.length; i++) {
-         pInfoText[i] = new JTextArea();
-         
-         pInfoText[i].setBackground(new Color(0,0,0,0));
-      }
-      
-      
-      
-/*      for(int i=0; i < pm.getPokemon().size(); i++) {
+		for(int i=0; i < pInfo.length; i++) {
+			pInfo[i] = new JLabel();
+			pInfo[i] = new JLabel(new ImageIcon("images/userMenuImages/pInfo4.png"));
+		}
+		for(int i=0; i < pInfo.length; i++) {
+			pInfoText[i] = new JTextArea();
+
+			pInfoText[i].setBackground(new Color(0,0,0,0));
+		}
+
+
+
+		/*      for(int i=0; i < pm.getPokemon().size(); i++) {
          System.out.println(i);
          String pName = pm.getPokemon().get(i).getPokemonName();
          String pNum = pm.getPokemon().get(i).getPokemonNumber()+"";
@@ -61,7 +63,7 @@ public class PInfoPage extends JPanel{
          String pAtk = pm.getPokemon().get(i).getPokemonAtk()+"";
          String pHp = pm.getPokemon().get(i).getPokemonHp()+"";
          String pLevel = pm.getPokemon().get(i).getPokemonLevel()+"";
-         
+
          pInfo[i].setIcon(new ImageIcon("images/userMenuImages/pBook/00"+pm.getPokemon().get(i).getPokemonNumber()+".png"));
          pInfoText[i].setText("\t포켓몬 이름 : "+ pName + "\n"
                         +"\t레    벨 : " + pLevel + "\n"
@@ -70,104 +72,106 @@ public class PInfoPage extends JPanel{
                         +"\t체    력  : " + pHp + "\n"
                         );
       }*/
-      new BattleManager().showP(this,user);
-      
-      mf.addKeyListener(new KeyAdapter() {
-         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == UserMenuPage.ESC) {
-               mf.remove(pip);
-               pip.setVisible(false);
-            }
-         }
-      });
-      
-      JLabel label = new JLabel();
-      label.setText("  ");
 
-      pip.setBackground(Color.WHITE);
-      pip.setLayout(null);
-      backButton.setBounds(900, 610, 90, 120);
-      backButton.setBorderPainted(false);
-      backButton.setFocusPainted(false);
-      backButton.setContentAreaFilled(false);
+		bm.showP((PInfoPage) pip, user);
 
-      backButton.addMouseListener(new MouseAdapter() {
-         @Override
-         public void mouseEntered(MouseEvent e) {
-            backButton.setIcon(new ImageIcon("images/userMenuImages/backButtonEntered.PNG"));
-            backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-         }
-         @Override
-         public void mouseExited(MouseEvent e) {
-            backButton.setIcon(new ImageIcon("images/userMenuImages/backButtonBasic.PNG"));
-            backButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-         }
-         @Override
-         public void mousePressed(java.awt.event.MouseEvent e) {
-            mf.remove(pip);
-            ump.setVisible(true);
-            mf.requestFocus();
 
-         }
-      });
-      
-       
+		mf.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == UserMenuPage.ESC) {
+					mf.remove(pip);
+					pip.setVisible(false);
+				}
+			}
+		});
 
-      label.setBounds(450, 20, 200, 40);
-      pInfo[0].setBounds(180, 30, 300, 160);
-      pInfo[1].setBounds(520, 30, 300, 160);
-      pInfo[2].setBounds(180, 380, 300, 160);
-      pInfo[3].setBounds(520, 380, 300, 160);
-      
-      pInfoText[0].setBounds(180,220,300,130);
-      pInfoText[1].setBounds(520,220,300,130);
-      pInfoText[2].setBounds(180,570,300,130);
-      pInfoText[3].setBounds(520,570,300,130);
+		JLabel label = new JLabel();
+		label.setText("  ");
 
-      pip.add(label);
-      
-      pip.add(backButton);
-      pip.add(pInfo[0]);
-      pip.add(pInfo[1]);
-      pip.add(pInfo[2]);
-      pip.add(pInfo[3]);
-      pip.add(pInfoText[0]);
-      pip.add(pInfoText[1]);
-      pip.add(pInfoText[2]);
-      pip.add(pInfoText[3]);
-      
-     
-   }
-   
-   
-   
-   
-   //BattlePage에서 연결
-      public PInfoPage(MainFrame mf, BattlePage bp, User user) {
+		pip.setBackground(Color.WHITE);
+		pip.setLayout(null);
+		backButton.setBounds(900, 610, 90, 120);
+		backButton.setBorderPainted(false);
+		backButton.setFocusPainted(false);
+		backButton.setContentAreaFilled(false);
 
-         this.mf = mf;
-         this.pip = this;
-         this.bp = bp;
-         this.
-         pip.setOpaque(false);
-         pip.setBounds(0, 0, 1024, 768);
-   /*      pm.setPokemon(new Pokemon(1,"이상해씨",50,3));
+		backButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				backButton.setIcon(new ImageIcon("images/userMenuImages/backButtonEntered.PNG"));
+				backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				backButton.setIcon(new ImageIcon("images/userMenuImages/backButtonBasic.PNG"));
+				backButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e) {
+				mf.remove(pip);
+				ump.setVisible(true);
+				mf.requestFocus();
+
+			}
+		});
+
+
+
+		label.setBounds(450, 20, 200, 40);
+		pInfo[0].setBounds(180, 30, 300, 160);
+		pInfo[1].setBounds(520, 30, 300, 160);
+		pInfo[2].setBounds(180, 380, 300, 160);
+		pInfo[3].setBounds(520, 380, 300, 160);
+
+		pInfoText[0].setBounds(180,220,300,130);
+		pInfoText[1].setBounds(520,220,300,130);
+		pInfoText[2].setBounds(180,570,300,130);
+		pInfoText[3].setBounds(520,570,300,130);
+
+		pip.add(label);
+
+		pip.add(backButton);
+		pip.add(pInfo[0]);
+		pip.add(pInfo[1]);
+		pip.add(pInfo[2]);
+		pip.add(pInfo[3]);
+		pip.add(pInfoText[0]);
+		pip.add(pInfoText[1]);
+		pip.add(pInfoText[2]);
+		pip.add(pInfoText[3]);
+
+
+	}
+
+
+
+
+	//BattlePage에서 연결
+	public PInfoPage(MainFrame mf, BattlePage bp, User user) {
+
+		this.mf = mf;
+		this.pip = this;
+		this.bp = bp;
+		this.
+		pip.setOpaque(false);
+		pip.setBounds(0, 0, 1024, 768);
+		/*      pm.setPokemon(new Pokemon(1,"이상해씨",50,3));
          pm.setPokemon(new Pokemon(4,"파이리",50,3));
          pm.setPokemon(new Pokemon(6,"리자몽",50,1));
          pm.setPokemon(new Pokemon(5,"리자드",50,2));*/
-         for(int i=0; i < pInfo.length; i++) {
-            pInfo[i] = new JLabel();
-            pInfo[i] = new JLabel(new ImageIcon("images/userMenuImages/pInfo4.png"));
-         }
-         for(int i=0; i < pInfo.length; i++) {
-            pInfoText[i] = new JTextArea();
-            
-            pInfoText[i].setBackground(new Color(0,0,0,0));
-         }
-         
-         
-         
-   /*      for(int i=0; i < pm.getPokemon().size(); i++) {
+		for(int i=0; i < pInfo.length; i++) {
+			pInfo[i] = new JLabel();
+			pInfo[i] = new JLabel(new ImageIcon("images/userMenuImages/pInfo4.png"));
+		}
+		for(int i=0; i < pInfo.length; i++) {
+			pInfoText[i] = new JTextArea();
+
+			pInfoText[i].setBackground(new Color(0,0,0,0));
+		}
+
+
+
+		/*      for(int i=0; i < pm.getPokemon().size(); i++) {
             System.out.println(i);
             String pName = pm.getPokemon().get(i).getPokemonName();
             String pNum = pm.getPokemon().get(i).getPokemonNumber()+"";
@@ -175,7 +179,7 @@ public class PInfoPage extends JPanel{
             String pAtk = pm.getPokemon().get(i).getPokemonAtk()+"";
             String pHp = pm.getPokemon().get(i).getPokemonHp()+"";
             String pLevel = pm.getPokemon().get(i).getPokemonLevel()+"";
-            
+
             pInfo[i].setIcon(new ImageIcon("images/userMenuImages/pBook/00"+pm.getPokemon().get(i).getPokemonNumber()+".png"));
             pInfoText[i].setText("\t포켓몬 이름 : "+ pName + "\n"
                            +"\t레    벨 : " + pLevel + "\n"
@@ -184,76 +188,76 @@ public class PInfoPage extends JPanel{
                            +"\t체    력  : " + pHp + "\n"
                            );
          }
-         */
-        
-        
-         mf.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-               if(e.getKeyCode() == UserMenuPage.ESC) {
-                  mf.remove(pip);
-                  pip.setVisible(false);
-               }
-            }
-         });
-         
-         JLabel label = new JLabel();
-         label.setText("  ");
+		 */
 
-         pip.setBackground(Color.WHITE);
-         pip.setLayout(null);
-         backButton.setBounds(900, 610, 90, 120);
-         backButton.setBorderPainted(false);
-         backButton.setFocusPainted(false);
-         backButton.setContentAreaFilled(false);
 
-         backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-               backButton.setIcon(new ImageIcon("images/userMenuImages/backButtonEntered.PNG"));
-               backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-               backButton.setIcon(new ImageIcon("images/userMenuImages/backButtonBasic.PNG"));
-               backButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            }
-            @Override
-            public void mousePressed(java.awt.event.MouseEvent e) {
-               mf.remove(pip);
-               bp.setVisible(true);
-               mf.requestFocus();
+		mf.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == UserMenuPage.ESC) {
+					mf.remove(pip);
+					pip.setVisible(false);
+				}
+			}
+		});
 
-            }
-         });
+		JLabel label = new JLabel();
+		label.setText("  ");
 
-         label.setBounds(450, 20, 200, 40);
-         pInfo[0].setBounds(180, 30, 300, 160);
-         pInfo[1].setBounds(520, 30, 300, 160);
-         pInfo[2].setBounds(180, 380, 300, 160);
-         pInfo[3].setBounds(520, 380, 300, 160);
-         
-         pInfoText[0].setBounds(180,220,300,130);
-         pInfoText[1].setBounds(520,220,300,130);
-         pInfoText[2].setBounds(180,570,300,130);
-         pInfoText[3].setBounds(520,570,300,130);
+		pip.setBackground(Color.WHITE);
+		pip.setLayout(null);
+		backButton.setBounds(900, 610, 90, 120);
+		backButton.setBorderPainted(false);
+		backButton.setFocusPainted(false);
+		backButton.setContentAreaFilled(false);
 
-         pip.add(label);
-         
-         pip.add(backButton);
-         pip.add(pInfo[0]);
-         pip.add(pInfo[1]);
-         pip.add(pInfo[2]);
-         pip.add(pInfo[3]);
-         pip.add(pInfoText[0]);
-         pip.add(pInfoText[1]);
-         pip.add(pInfoText[2]);
-         pip.add(pInfoText[3]);
-         
-         
-      }
-      
-      
-      /*//Npc배틀페이지 연결
+		backButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				backButton.setIcon(new ImageIcon("images/userMenuImages/backButtonEntered.PNG"));
+				backButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				backButton.setIcon(new ImageIcon("images/userMenuImages/backButtonBasic.PNG"));
+				backButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e) {
+				mf.remove(pip);
+				bp.setVisible(true);
+				mf.requestFocus();
+
+			}
+		});
+
+		label.setBounds(450, 20, 200, 40);
+		pInfo[0].setBounds(180, 30, 300, 160);
+		pInfo[1].setBounds(520, 30, 300, 160);
+		pInfo[2].setBounds(180, 380, 300, 160);
+		pInfo[3].setBounds(520, 380, 300, 160);
+
+		pInfoText[0].setBounds(180,220,300,130);
+		pInfoText[1].setBounds(520,220,300,130);
+		pInfoText[2].setBounds(180,570,300,130);
+		pInfoText[3].setBounds(520,570,300,130);
+
+		pip.add(label);
+
+		pip.add(backButton);
+		pip.add(pInfo[0]);
+		pip.add(pInfo[1]);
+		pip.add(pInfo[2]);
+		pip.add(pInfo[3]);
+		pip.add(pInfoText[0]);
+		pip.add(pInfoText[1]);
+		pip.add(pInfoText[2]);
+		pip.add(pInfoText[3]);
+
+
+	}
+
+
+	/*//Npc배틀페이지 연결
       public PInfoPage(MainFrame mf, NpcBattlePage nbp) {
          this.mf = mf;
          this.pip = this;
@@ -270,12 +274,12 @@ public class PInfoPage extends JPanel{
          }
          for(int i=0; i < pInfo.length; i++) {
             pInfoText[i] = new JTextArea();
-            
+
             pInfoText[i].setBackground(new Color(0,0,0,0));
          }
-         
-         
-         
+
+
+
          for(int i=0; i < pm.getPokemon().size(); i++) {
             System.out.println(i);
             String pName = pm.getPokemon().get(i).getPokemonName();
@@ -284,7 +288,7 @@ public class PInfoPage extends JPanel{
             String pAtk = pm.getPokemon().get(i).getPokemonAtk()+"";
             String pHp = pm.getPokemon().get(i).getPokemonHp()+"";
             String pLevel = pm.getPokemon().get(i).getPokemonLevel()+"";
-            
+
             pInfo[i].setIcon(new ImageIcon("images/userMenuImages/pBook/00"+pm.getPokemon().get(i).getPokemonNumber()+".png"));
             pInfoText[i].setText("\t포켓몬 이름 : "+ pName + "\n"
                            +"\t레    벨 : " + pLevel + "\n"
@@ -294,7 +298,7 @@ public class PInfoPage extends JPanel{
                            );
          }
          BattleManager.showP(this);
-         
+
          mf.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                if(e.getKeyCode() == UserMenuPage.ESC) {
@@ -303,7 +307,7 @@ public class PInfoPage extends JPanel{
                }
             }
          });
-         
+
          JLabel label = new JLabel();
          label.setText("  ");
 
@@ -339,14 +343,14 @@ public class PInfoPage extends JPanel{
          pInfo[1].setBounds(520, 30, 300, 160);
          pInfo[2].setBounds(180, 380, 300, 160);
          pInfo[3].setBounds(520, 380, 300, 160);
-         
+
          pInfoText[0].setBounds(180,220,300,130);
          pInfoText[1].setBounds(520,220,300,130);
          pInfoText[2].setBounds(180,570,300,130);
          pInfoText[3].setBounds(520,570,300,130);
 
          pip.add(label);
-         
+
          pip.add(backButton);
          pip.add(pInfo[0]);
          pip.add(pInfo[1]);
@@ -357,26 +361,31 @@ public class PInfoPage extends JPanel{
          pip.add(pInfoText[2]);
          pip.add(pInfoText[3]);
       }
-      */
-   
-   
-   
+	 */
 
-   public JLabel[] getpInfo() {
-      return pInfo;
-   }
 
-   public void setpInfo(JLabel[] pInfo) {
-      this.pInfo = pInfo;
-   }
 
-   public JTextArea[] getpInfoText() {
-      return pInfoText;
-   }
 
-   public void setpInfoText(JTextArea[] pInfoText) {
-      this.pInfoText = pInfoText;
-   }
+	public JLabel[] getpInfo() {
+		return pInfo;
+	}
+
+	public void setpInfo(JLabel[] pInfo) {
+		this.pInfo = pInfo;
+	}
+
+	public JTextArea[] getpInfoText() {
+		return pInfoText;
+	}
+
+	public void setpInfoText(JTextArea[] pInfoText) {
+		this.pInfoText = pInfoText;
+	}
+
+
+
+
+	
 
 
 }
