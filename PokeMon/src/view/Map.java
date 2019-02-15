@@ -29,7 +29,7 @@ import model.vo.User;
 
 class Map extends JPanel implements Runnable, KeyListener {
 
-	int port = 8500;
+	int port = 8600;
 
 	private MainFrame mf;
 	private Map m;
@@ -116,8 +116,9 @@ class Map extends JPanel implements Runnable, KeyListener {
 		this.setSize(1024,768);
 		this.setBounds(0,0,1024,768);
 		init();
+		
 		start();
-
+		
 		Dimension screen = tk.getScreenSize();
 
 		int xpos = (int)(screen.getWidth() / 2 - getWidth() / 2);
@@ -152,6 +153,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 				keyProcess();
 				repaint();
 				collision();
+				//serverInput();
 				Thread.sleep(20);
 				cnt++;
 
@@ -742,7 +744,6 @@ class Map extends JPanel implements Runnable, KeyListener {
 					m.setVisible(false);
 					mf.add(bp);
 					bp.setVisible(true);
-					run();
 					cantmove = false;
 				}
 			}
@@ -844,7 +845,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 
 	public void serverInput() {
 		try {
-			String serverIP = "192.168.30.6";
+			String serverIP = "192.168.130.96";
 
 			Socket socket = new Socket(serverIP,port);
 
@@ -859,28 +860,29 @@ class Map extends JPanel implements Runnable, KeyListener {
 				//	4. 스트림을 통해 읽고 쓰기를 한다.
 				Scanner sc = new Scanner(System.in);
 
-				do {
-					System.out.println("대화 입력: ");
-					String message = sc.nextLine();
-
-					pw.println(message);
+				//do {
+					/*System.out.println("대화 입력: ");
+					String message = sc.nextLine();*/
+					int netx = x;
+					int nety = y;
+					pw.println("x : " + x + " , y : " + y);
 					pw.flush();
 
-					if(message.equals("exit")) {
+					/*if(message.equals("exit")) {
 						break;
 					}
-
+*/
 					String recieveMessage = br.readLine();
 					System.out.println(recieveMessage);
 					sc.nextLine();					
 
 
-				}while(true);
+				//}while(true);
 
 				//	5. 통신을 종료한다.
-				br.close();
-				pw.close();
-				socket.close();
+				//br.close();
+				//pw.close();
+				//socket.close();
 
 
 			}
