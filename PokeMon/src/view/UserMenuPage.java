@@ -16,7 +16,7 @@ import model.vo.User;
 
 public class UserMenuPage extends JPanel {
 	public final static int ESC = 27;
-	private JPanel ump;
+	private UserMenuPage ump;
 	private MainFrame mf;
 	private Map m;
 	private PInfoPage pip;
@@ -40,7 +40,7 @@ public class UserMenuPage extends JPanel {
 		this.ump = this;
 		this.mf = mf;
 		this.m = (Map) panel;
-		this.uip = new UserInfoPage(mf, this);
+		//this.uip = new UserInfoPage(mf, this,user);
 		this.pip = new PInfoPage(mf, this,user);
 		this.sp = new SavePage(mf, this);
 		this.uivp = new UserInvenPage(mf,this);
@@ -133,9 +133,7 @@ public class UserMenuPage extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				ump.setVisible(false);
-				uip.setVisible(true);
-				mf.add(uip);
-				
+				mf.add(new UserInfoPage(mf,ump,user));
 			}
 		});
 		this.add(userInfoButton);
