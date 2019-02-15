@@ -1,13 +1,18 @@
 package controller;
 
 import model.dao.ItemDao;
+import model.vo.Ball;
 import model.vo.Item;
+import model.vo.Pokemon;
+import model.vo.Recovery;
+import model.vo.Stone;
 import model.vo.User;
 
 public class ItemManager {
    
    private ItemDao id = new ItemDao();
    private User user;
+   private Pokemon p = new Pokemon();
    
    public ItemManager(User user) {
 	   this.user = user;
@@ -47,6 +52,7 @@ public class ItemManager {
     	  }else {
     		  System.out.print(" " + i + " : " + user.getUi_list().get(i).getiName() + " / "
     				  + user.getUi_list().get(i).getiAmount() + "개 |");
+    		  useBall(i);
     	  }
       }
    }
@@ -75,7 +81,7 @@ public class ItemManager {
 	      }
 	      
 	   }
-	   public void useBall(int iNo, int useBall) {
+	   /*public void useBall(int iNo, int useBall) {
 	      if(iNo>=0&&iNo<=2) {
 	         
 	         System.out.println("볼 사용");
@@ -94,7 +100,7 @@ public class ItemManager {
 	      }else {
 	         System.out.println("볼이 아님");
 	      }
-	   }
+	   }*/
 	   public void Recovery(int iNo, int useRecovery) {
 	      if(iNo>=3&&iNo<=5) {
 	         
@@ -115,4 +121,58 @@ public class ItemManager {
 	         System.out.println("회복약이 아님");
 	      }      
 	   }
+	   public int useBall(int iNo) {
+		   Item item = id.getIList().get(iNo);
+		   int prob=2;
+		   if(item instanceof Ball) {
+			   item = (Ball)id.getIList().get(iNo);
+			   for(int i=0; i<id.getIList().size() ; i++) {
+				   if(i==iNo) {
+					   id.getIList().get(i).setiAmount(id.getIList().get(i).getiAmount()-1);
+					   System.out.println("사용 아이템 : "+id.getIList().get(i).getiName());
+					   System.out.println("남은 수량 : "+id.getIList().get(i).getiAmount());
+					   System.out.println("포획  : "+((Ball)item).getcProb());
+					   return ((Ball)item).getcProb();
+				   }
+			   }
+		   }else if(id.getIList().get(iNo) instanceof Stone) {
+			   for(int i=0; i<id.getIList().size() ; i++) {
+				   if(i==iNo) {
+					   id.getIList().get(i).setiAmount(id.getIList().get(i).getiAmount()-1);
+					   System.out.println("사용 아이템 : "+id.getIList().get(i).getiName());
+					   System.out.println("남은 수량 : "+id.getIList().get(i).getiAmount());
+					   //return Evolution으로 보내줌;
+				   }
+			   }
+		   }else if(id.getIList().get(iNo) instanceof Recovery) {
+			   for(int i=0; i<id.getIList().size() ; i++) {
+				   if(i==iNo) {
+					   id.getIList().get(i).setiAmount(id.getIList().get(i).getiAmount()-1);
+					   System.out.println("사용 아이템 : "+id.getIList().get(i).getiName());
+					   System.out.println("남은 수량 : "+id.getIList().get(i).getiAmount());
+					   return ((Ball)item).getcProb();
+				   }
+			   }
+		   }
+		   return prob;
+	   }
+	   public boolean useStone(int iNo) {
+		   if(id.getIList().get(iNo) instanceof Stone) {
+			   for(int i=0; i<id.getIList().size() ; i++) {
+				   if(user.getUp_list().get(iNo).getpType()==1) {
+					   
+				   }else if(user.getUp_list().get(iNo).getpType()==2) {
+					   
+				   }else if(user.getUp_list().get(iNo).getpType()==3) {
+					   
+				   }else {
+					   System.out.println("진화의 돌을 사용할 수 없는 객체 입니다.");
+				   }
+			   }
+			   
+		   }
+		   
+		   return false;
+	   }
+	   
 }
