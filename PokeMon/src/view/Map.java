@@ -30,12 +30,13 @@ import model.vo.User;
 class Map extends JPanel implements Runnable, KeyListener {
 
 	int port = 8500;
-	
+
 	private MainFrame mf;
 	private Map m;
 	private PInfoPage pip;
 	private UserMenuPage ump; 
 	private MarketView marketView;//SM_추가
+	private CenterView centerView;
 	private int movementSP = 3;
 
 	private StartPage stp;
@@ -87,20 +88,27 @@ class Map extends JPanel implements Runnable, KeyListener {
 	private int moveStatus; //케릭터가 어디를 바라보는지 방향을 받을 변수
 	private int num = 99;
 	private boolean onOff;
-private User user;
+	private int centernum;
+	
+
+
+
+
+	private User user;
 	int escCtn=0;//SM_추가
 
 	public Map(MainFrame mf, User user) {
-this.user = user;
+		this.user = user;
 		System.out.println("맵 클래스 실행...");
 
 		this.mf = mf;
 		this.m = this;
-		this.ump = new UserMenuPage(mf, m, user);
+		this.ump = new UserMenuPage(mf, m,user);
 		/*      this.stp = new StartPage(mf);*/
-		this.bp = new BattlePage(mf, m, user);   //BattlePage 추가
+		this.bp = new BattlePage(mf, m,user);   //BattlePage 추가
 
 		this.marketView=new MarketView(mf,m,user);//SM_추가
+		this.centerView = new CenterView(mf, m);
 
 		onOff = true;
 
@@ -201,15 +209,35 @@ this.user = user;
 				/*gc.setFont(new Font("돋움체", Font.BOLD, 30));
 				gc.setColor(Color.white);
 				gc.drawString(dialogstr, nx, ny);*/
-				escCtn=1;
-				System.out.println("상점 이용");
-				y -= 50;
-				//this.market = new Market(mf,m);
-				m.setVisible(false);
-				mf.add(marketView);
-				marketView.setVisible(true);
+				switch(centernum) {
+				case 1 :{
+					escCtn=1;
+					System.out.println("상점 이용");
+					y += 50;
+					//this.market = new Market(mf,m);
+					m.setVisible(false);
+					mf.add(marketView);
+					marketView.setVisible(true);
+					dialogOn = false;
+					candial = false;
+					break;
+				}
+				case 2 :{
+					escCtn=1;
+					System.out.println("센터 이용");
+					y += 50;
+					//this.market = new Market(mf,m);
+					m.setVisible(false);
+					mf.add(centerView);
+					centerView.setVisible(true);
+					dialogOn = false;
+					candial = false;
+					break;
+				}
+				}
+
 			}
-			
+
 			break;
 		}
 		case 2 : gc.drawImage(pvp, 0, 0, 1024, 768, this); break;//SM_추가
@@ -337,7 +365,7 @@ this.user = user;
 				break;
 			}
 
-			if(candial == true && dialogOn == false) {
+			if(escCtn==0 && candial == true && dialogOn == false) {
 				dialogOn = true;
 				System.out.println("엔터 눌림" + dialogOn);
 			}else if(dialogOn == true) {
@@ -504,7 +532,7 @@ this.user = user;
 			if(rect.intersects(lamp)){canMove();}
 			Rectangle post = new Rectangle(440, 495, 10, 20);
 			if(rect.intersects(post)){canMove();}
-			
+
 			Rectangle forest1 = new Rectangle(0, 0, 50, 768);
 			if(rect.intersects(forest1)){canMove();}
 			Rectangle forest2 = new Rectangle(150, 690, 300, 30);
@@ -604,14 +632,16 @@ this.user = user;
 				candial = false;
 				dialogOn = false;
 			}*/
-			Rectangle c_test2 = new Rectangle(184, 340, 30, 30);
-			if(rect.intersects(c_test2)){
+			Rectangle c_test3 = new Rectangle(700, 340, 300, 30);
+			if(moveStatus == 0 && rect.intersects(c_test3)){
 				candial = true;
-			}else {
-				candial = false;
-				dialogOn = false;
+				centernum = 2;
 			}
-			
+			Rectangle c_test2 = new Rectangle(0, 340, 300, 30);
+			if(moveStatus == 0 && rect.intersects(c_test2)){
+				candial = true;
+				centernum = 1;
+			}
 		}
 
 
@@ -815,48 +845,48 @@ this.user = user;
 	public void serverInput() {
 		try {
 			String serverIP = "192.168.30.6";
-		
+
 			Socket socket = new Socket(serverIP,port);
-			
+
 			//	2. 서버와의 입출력 스트림을 오픈한다.
 			if(socket != null) {
 				InputStream input = socket.getInputStream();
 				OutputStream output = socket.getOutputStream();
-				
+
 				//	3. 보조스트림을 붙여 성능을 개선한다.
 				BufferedReader br = new BufferedReader(new InputStreamReader(input));
 				PrintWriter pw = new PrintWriter(output);
 				//	4. 스트림을 통해 읽고 쓰기를 한다.
 				Scanner sc = new Scanner(System.in);
-				
+
 				do {
 					System.out.println("대화 입력: ");
 					String message = sc.nextLine();
-					
+
 					pw.println(message);
 					pw.flush();
-					
+
 					if(message.equals("exit")) {
 						break;
 					}
-					
+
 					String recieveMessage = br.readLine();
 					System.out.println(recieveMessage);
 					sc.nextLine();					
-					
-					
+
+
 				}while(true);
-			
+
 				//	5. 통신을 종료한다.
 				br.close();
 				pw.close();
 				socket.close();
-				
-				
+
+
 			}
-			
-		
-		
+
+
+
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
