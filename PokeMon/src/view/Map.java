@@ -110,7 +110,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 		this.bp = new BattlePage(mf, m,user);   //BattlePage 추가
 
 		this.marketView=new MarketView(mf,m,user);//SM_추가
-		this.centerView = new CenterView(mf, m);
+		this.centerView = new CenterView(mf, m,user);
 
 		onOff = true;
 
