@@ -31,6 +31,7 @@ class Map extends JPanel implements Runnable, KeyListener {
 
 	int port = 8600;
 
+	
 	private MainFrame mf;
 	private Map m;
 	private PInfoPage pip;
